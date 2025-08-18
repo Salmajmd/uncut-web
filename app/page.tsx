@@ -9,11 +9,11 @@ const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 export default function UNCUTApp() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [isLogin, setIsLogin] = useState(true)
   const [formData, setFormData] = useState({ email: '', password: '', fullName: '' })
-  const [dailyData, setDailyData] = useState({ content: {}, notes: { daily: '' } })
+  const [dailyData, setDailyData] = useState({ content: {} as any, notes: { daily: '' } })
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -29,7 +29,7 @@ export default function UNCUTApp() {
     return () => subscription.unsubscribe()
   }, [])
 
-  const handleAuth = async (e) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
       if (isLogin) {
@@ -47,13 +47,19 @@ export default function UNCUTApp() {
         if (error) throw error
         alert('Check your email to confirm your account!')
       }
-    } catch (error) {
+    } catch (error: any) {
       alert(error.message)
     }
   }
 
-  const updateContent = (type) => {
-    const newData = { ...dailyData, content: { ...dailyData.content, [type]: (dailyData.content[type] || 0) + 1 } }
+  const updateContent = (type: string) => {
+    const newData = { 
+      ...dailyData, 
+      content: { 
+        ...dailyData.content, 
+        [type]: (dailyData.content[type] || 0) + 1 
+      } 
+    }
     setDailyData(newData)
   }
 
