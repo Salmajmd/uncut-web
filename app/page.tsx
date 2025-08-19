@@ -17,7 +17,7 @@ export default function UNCUTApp() {
     'threads': 0
   })
 
-  const handleLogin = (e) => {
+  const handleAuth = async (e) => {
     e.preventDefault()
     setUser({ name: fullName || 'Demo User', email })
   }
@@ -26,17 +26,48 @@ export default function UNCUTApp() {
     setContent(prev => ({ ...prev, [type]: prev[type] + 1 }))
   }
 
+  const styles = {
+    container: {
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '16px'
+    },
+    card: {
+      background: 'white',
+      borderRadius: '24px',
+      padding: '32px',
+      maxWidth: '400px',
+      width: '100%',
+      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+    },
+    title: {
+      fontSize: '48px',
+      fontWeight: '900',
+      background: 'linear-gradient(to right, #06b6d4, #0891b2)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      textAlign: 'center',
+      marginBottom: '8px'
+    },
+    subtitle: {
+      textAlign: 'center',
+      color: '#64748b',
+      marginBottom: '32px'
+    }
+  }
+
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-200 flex items-center justify-center p-4">
-        <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
-          <h1 className="text-5xl font-black bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent text-center mb-2">
-            UNCUT
-          </h1>
-          <p className="text-center text-slate-600 mb-8">Raw. Unfiltered. Consistent.</p>
+      <div style={styles.container}>
+        <div style={styles.card}>
+          <h1 style={styles.title}>UNCUT</h1>
+          <p style={styles.subtitle}>Raw. Unfiltered. Consistent.</p>
           
-          <form onSubmit={handleLogin} className="space-y-4">
-            <h2 className="text-xl font-bold text-center mb-4">
+          <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <h2 style={{ textAlign: 'center', fontSize: '20px', fontWeight: '700', marginBottom: '16px' }}>
               {isSignUp ? 'Create Account' : 'Sign In'}
             </h2>
             
@@ -46,7 +77,7 @@ export default function UNCUTApp() {
                 placeholder="Full Name"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-cyan-500"
+                style={{ width: '100%', padding: '12px', border: '1px solid #d1d5db', borderRadius: '12px', fontSize: '16px' }}
                 required
               />
             )}
@@ -56,7 +87,7 @@ export default function UNCUTApp() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-cyan-500"
+              style={{ width: '100%', padding: '12px', border: '1px solid #d1d5db', borderRadius: '12px', fontSize: '16px' }}
               required
             />
             
@@ -65,20 +96,23 @@ export default function UNCUTApp() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-cyan-500"
+              style={{ width: '100%', padding: '12px', border: '1px solid #d1d5db', borderRadius: '12px', fontSize: '16px' }}
               required
             />
             
-            <button type="submit" className="w-full bg-cyan-500 text-white py-3 rounded-xl font-bold hover:bg-cyan-600">
+            <button 
+              type="submit" 
+              style={{ width: '100%', background: '#06b6d4', color: 'white', padding: '12px', borderRadius: '12px', border: 'none', fontSize: '16px', fontWeight: '600', cursor: 'pointer' }}
+            >
               {isSignUp ? 'Create Account' : 'Sign In'}
             </button>
             
             <button 
               type="button" 
               onClick={() => setIsSignUp(!isSignUp)} 
-              className="w-full text-cyan-500 text-sm hover:text-cyan-600"
+              style={{ width: '100%', background: 'none', color: '#06b6d4', border: 'none', fontSize: '14px', cursor: 'pointer', padding: '8px' }}
             >
-              {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+              {isSignUp ? 'Already have an account? Sign In' : 'Do not have an account? Sign Up'}
             </button>
           </form>
         </div>
@@ -87,68 +121,68 @@ export default function UNCUTApp() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100">
-      <header className="bg-white p-4 border-b shadow-sm">
-        <div className="flex justify-between items-center max-w-6xl mx-auto">
+    <div style={{ minHeight: '100vh', background: '#f1f5f9' }}>
+      <header style={{ background: 'white', padding: '16px', borderBottom: '1px solid #e2e8f0' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto' }}>
           <div>
-            <h1 className="text-2xl font-bold text-cyan-500">UNCUT</h1>
-            <p className="text-sm text-slate-600">Hi {user.name}! 👋</p>
+            <h1 style={{ fontSize: '24px', fontWeight: '700', color: '#06b6d4' }}>UNCUT</h1>
+            <p style={{ fontSize: '14px', color: '#64748b' }}>Hi {user.name}! 👋</p>
           </div>
           <button 
             onClick={() => setUser(null)} 
-            className="text-red-600 hover:text-red-700 text-sm font-medium"
+            style={{ color: '#dc2626', background: 'none', border: 'none', fontSize: '14px', fontWeight: '500', cursor: 'pointer' }}
           >
             Logout
           </button>
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto p-4 space-y-6">
-        <div className="bg-white rounded-3xl p-6 shadow-lg">
-          <h2 className="text-xl font-bold mb-6">📱 Content Creation</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+      <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '24px' }}>
+        <div style={{ background: 'white', borderRadius: '24px', padding: '24px', marginBottom: '24px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: '700', marginBottom: '24px' }}>📱 Content Creation</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '16px' }}>
             {[
-              { id: 'ig-reel', name: 'Instagram Reel', color: 'border-pink-500' },
-              { id: 'ig-story', name: 'Instagram Story', color: 'border-purple-500' },
-              { id: 'tiktok', name: 'TikTok', color: 'border-black' },
-              { id: 'linkedin', name: 'LinkedIn', color: 'border-blue-600' },
-              { id: 'youtube', name: 'YouTube', color: 'border-red-500' },
-              { id: 'threads', name: 'Threads', color: 'border-gray-800' },
+              { id: 'ig-reel', name: 'Instagram Reel' },
+              { id: 'ig-story', name: 'Instagram Story' },
+              { id: 'tiktok', name: 'TikTok' },
+              { id: 'linkedin', name: 'LinkedIn' },
+              { id: 'youtube', name: 'YouTube' },
+              { id: 'threads', name: 'Threads' },
             ].map((type) => (
               <button
                 key={type.id}
                 onClick={() => updateContent(type.id)}
-                className={`bg-white border-2 ${type.color} rounded-2xl p-4 text-center hover:shadow-lg transition-all hover:scale-105`}
+                style={{ background: 'white', border: '2px solid #06b6d4', borderRadius: '16px', padding: '16px', textAlign: 'center', cursor: 'pointer' }}
               >
-                <div className="text-3xl font-bold text-slate-900 mb-2">
+                <div style={{ fontSize: '24px', fontWeight: '700', color: '#1f2937', marginBottom: '8px' }}>
                   {content[type.id]}
                 </div>
-                <div className="text-sm text-slate-600">{type.name}</div>
+                <div style={{ fontSize: '14px', color: '#64748b' }}>{type.name}</div>
               </button>
             ))}
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 shadow-lg">
-          <h3 className="text-xl font-bold mb-4">📊 Today's Summary</h3>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-cyan-500">
+        <div style={{ background: 'white', borderRadius: '24px', padding: '24px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
+          <h3 style={{ fontSize: '20px', fontWeight: '700', marginBottom: '24px' }}>📊 Today Summary</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '16px' }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '24px', fontWeight: '700', color: '#06b6d4' }}>
                 {Object.values(content).reduce((a, b) => a + b, 0)}
               </div>
-              <div className="text-sm text-slate-600">Total Content</div>
+              <div style={{ fontSize: '12px', color: '#64748b' }}>Total Content</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-500">0</div>
-              <div className="text-sm text-slate-600">Outreach</div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '24px', fontWeight: '700', color: '#06b6d4' }}>0</div>
+              <div style={{ fontSize: '12px', color: '#64748b' }}>Outreach</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-500">0</div>
-              <div className="text-sm text-slate-600">Inbound</div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '24px', fontWeight: '700', color: '#06b6d4' }}>0</div>
+              <div style={{ fontSize: '12px', color: '#64748b' }}>Inbound</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-500">1</div>
-              <div className="text-sm text-slate-600">Streak</div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '24px', fontWeight: '700', color: '#06b6d4' }}>1</div>
+              <div style={{ fontSize: '12px', color: '#64748b' }}>Streak</div>
             </div>
           </div>
         </div>
