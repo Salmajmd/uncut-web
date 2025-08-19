@@ -3,8 +3,13 @@
 import { useState } from 'react'
 import { CSSProperties } from 'react'
 
+interface User {
+  name: string
+  email: string
+}
+
 export default function UNCUTApp() {
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
