@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import { CSSProperties } from 'react'
 
 export default function UNCUTApp() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<any>(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
@@ -17,16 +18,16 @@ export default function UNCUTApp() {
     'threads': 0
   })
 
-  const handleAuth = async (e) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault()
     setUser({ name: fullName || 'Demo User', email })
   }
 
-  const updateContent = (type) => {
+  const updateContent = (type: string) => {
     setContent(prev => ({ ...prev, [type]: prev[type] + 1 }))
   }
 
-  const styles = {
+  const styles: { [key: string]: CSSProperties } = {
     container: {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
@@ -49,11 +50,11 @@ export default function UNCUTApp() {
       background: 'linear-gradient(to right, #06b6d4, #0891b2)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
-      textAlign: 'center',
+      textAlign: 'center' as const,
       marginBottom: '8px'
     },
     subtitle: {
-      textAlign: 'center',
+      textAlign: 'center' as const,
       color: '#64748b',
       marginBottom: '32px'
     }
